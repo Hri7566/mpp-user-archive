@@ -1,0 +1,13 @@
+{
+  "name": "mpp-browser-bot",
+  "version": "1.0.0",
+  "main": "build.js",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "esbuild": "^0.17.14",
+    "idb-keyval": "^6.2.0"
+  }
+}
