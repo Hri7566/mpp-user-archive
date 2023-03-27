@@ -4,7 +4,6 @@ import { Data, User } from "./data";
 
 const MPP = (globalThis as any).MPP as TMPP;
 
-
 export class Bot {
     public static client = MPP.client;
 
@@ -31,10 +30,12 @@ export class Bot {
     }
 
     public static sendChat(message: string) {
-        this.client.sendArray([{
-            m: 'a',
-            message: `\u034f${message}`
-        }]);
+        this.client.sendArray([
+            {
+                m: "a",
+                message: `\u034f${message}`
+            }
+        ]);
     }
 
     public static async updateNameHistory(p: Participant) {
@@ -46,7 +47,7 @@ export class Bot {
         }
 
         const name = await Data.getNameHistory(p._id, p.name);
-        if (typeof name == 'undefined') {
+        if (typeof name == "undefined") {
             await Data.addNameHistory(p._id, p.name);
         }
     }

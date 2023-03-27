@@ -1,14 +1,18 @@
 import { CommandGroup, CommandHandler } from "./Command";
-import { ABOUT } from "./general/about";
-import { COLOR } from "./general/color";
 import { HELP } from "./general/help";
-import { NAMEHISTORY } from "./general/namehistory";
+import { ABOUT } from "./general/about";
+import { COLOR } from "./util/color";
+import { NAMEHISTORY } from "./util/namehistory";
 
 const COMMANDS_GENERAL = new CommandGroup("general", "General", [
     HELP,
-    ABOUT,
-    NAMEHISTORY,
-    COLOR
+    ABOUT
+]);
+
+const COMMANDS_UTIL = new CommandGroup("util", "Utility", [
+    COLOR,
+    NAMEHISTORY
 ]);
 
 CommandHandler.addCommandGroup(COMMANDS_GENERAL);
+CommandHandler.addCommandGroup(COMMANDS_UTIL);
