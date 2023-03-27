@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "esbuild": "^0.17.14",
-    "idb-keyval": "^6.2.0"
+    "idb-keyval": "^6.2.0",
+    "mathjs": "^11.7.0"
   }
 }

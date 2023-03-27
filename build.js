@@ -5,9 +5,9 @@ const { readFileSync, writeFileSync } = require("fs");
     await esbuild.build({
         entryPoints: ["src/index.ts"],
         bundle: true,
-        minify: true,
+        minify: false,
         minifySyntax: false,
-        minifyWhitespace: true,
+        minifyWhitespace: false,
         outfile: "build/raw.js"
     });
 

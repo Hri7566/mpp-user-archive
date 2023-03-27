@@ -1,7 +1,7 @@
-import { Bot } from "..";
-import type { ChatMessage, Client } from "../MPP";
-import { Data, User } from "../data";
-import { Permissions } from "../permissions";
+import { Bot } from "../";
+import type { ChatMessage, Client } from "../../MPP";
+import { Data, User } from "../../data";
+import { Permissions } from "../../permissions";
 
 export interface CommandMessage extends ChatMessage {
     prefix: string;
@@ -11,7 +11,10 @@ export interface CommandMessage extends ChatMessage {
     argcat: string;
 }
 
-export type CommandCallback = (msg: CommandMessage, cl: Client) => Promise<string | void> | string | void;
+export type CommandCallback = (
+    msg: CommandMessage,
+    cl: Client
+) => Promise<string | void> | string | void;
 
 export class Command {
     constructor(
@@ -42,7 +45,7 @@ export class CommandHandler {
     public static async handleCommand(msg: CommandMessage) {
         let usedPrefix;
 
-        msg.args = msg.a.split(' ');
+        msg.args = msg.a.split(" ");
         msg.argcat = msg.a.substring(msg.args[0].length).trim();
 
         for (const prefix of this.prefixes) {
@@ -50,8 +53,8 @@ export class CommandHandler {
             usedPrefix = msg.a.substring(0, prefix.length);
         }
 
-        if (typeof usedPrefix == 'undefined') return;
-        msg.prefix = usedPrefix
+        if (typeof usedPrefix == "undefined") return;
+        msg.prefix = usedPrefix;
         let user = await Data.getUser(msg.p._id);
 
         if (!user) {
@@ -59,28 +62,31 @@ export class CommandHandler {
             user = await Data.getUser(msg.p._id);
         }
 
-        msg.user = (user as User);
+        msg.user = user as User;
 
         const name = await Data.getNameHistory(msg.p._id, msg.p.name);
-        if (typeof name == 'undefined') {
+        if (typeof name == "undefined") {
             await Data.addNameHistory(msg.p._id, msg.p.name);
         }
 
         for (const commandGroup of this.commandGroups) {
-            commandLoop:
-            for (const command of commandGroup.commands) {
+            commandLoop: for (const command of commandGroup.commands) {
                 let usedAlias;
-                
-                aliasLoop:
-                for (const alias of command.aliases) {
-                    if (msg.args[0].replace(msg.prefix, "") !== alias) continue aliasLoop;
+
+                aliasLoop: for (const alias of command.aliases) {
+                    if (msg.args[0].replace(msg.prefix, "") !== alias)
+                        continue aliasLoop;
                     usedAlias = alias;
                 }
 
-                if (typeof usedAlias == 'undefined') continue commandLoop;
-                msg.alias = usedAlias
-                
-                const hasPermission = Permissions.testGroupPermission(msg.user.groups, command.permissionNode);
+                if (typeof usedAlias == "undefined") continue commandLoop;
+                msg.alias = usedAlias;
+
+                const hasPermission = Permissions.testGroupPermission(
+                    msg.user.groups,
+                    command.permissionNode
+                );
+
                 if (!hasPermission) return;
 
                 try {
