@@ -10,6 +10,7 @@
     "esbuild": "^0.17.14",
     "idb-keyval": "^6.2.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "mathjs": "^11.7.0"
   }
 }

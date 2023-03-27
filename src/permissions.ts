@@ -1,22 +1,24 @@
 import type { PermissionGroup } from "./data";
 
 export class Permissions {
-    public static groups: PermissionGroup[] = [{
-        id: 'user',
-        permissions: ['command.general.*']
-    },
-    {
-        id: 'admin',
-        permissions: ['command.data.*', 'command.utility.*']
-    }];
+    public static groups: PermissionGroup[] = [
+        {
+            id: "user",
+            permissions: ["command.general.*"]
+        },
+        {
+            id: "admin",
+            permissions: ["command.data.*", "command.util.*"]
+        }
+    ];
 
     public static resolvePermission(node1: string, node2: string) {
-        const p1 = node1.split('.');
-        const p2 = node2.split('.');
+        const p1 = node1.split(".");
+        const p2 = node2.split(".");
 
         for (const sec1 of p1) {
             const i = p1.indexOf(sec1);
-            if (sec1 == '*' || p2[i] == '*') return true;
+            if (sec1 == "*" || p2[i] == "*") return true;
             if (sec1 !== p2[i]) return false;
         }
 
@@ -24,8 +26,7 @@ export class Permissions {
     }
 
     public static testGroupPermission(groups: string[], node: string) {
-        groupLoop:
-        for (const groupstr of groups) {
+        groupLoop: for (const groupstr of groups) {
             const group = this.groups.find(g => g.id == groupstr);
             if (!group) continue;
 

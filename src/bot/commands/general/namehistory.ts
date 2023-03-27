@@ -1,4 +1,4 @@
-import { Data } from "../../data";
+import { Data } from "../../../data";
 import { Command, CommandHandler } from "../Command";
 
 export const NAMEHISTORY = new Command(
@@ -14,10 +14,7 @@ export const NAMEHISTORY = new Command(
                 return `No user found; Use their full _id.`;
             }
             const names = user.nameHistory;
-            return `Names: ${names
-                .map(nh => `${nh.name}`)
-                .join(", ")
-                .substring(0, 255)}`;
+            return `Names: ${names.map(nh => `${nh.name}`).join(", ")}`;
         }
     },
     "command.general.namehistory",
