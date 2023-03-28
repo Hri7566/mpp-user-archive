@@ -45,8 +45,6 @@ model ColorHistory {
 }
 
 model APIAuth {
-  addressHash Bytes @id @unique
+  addressHash Bytes @id @unique @db.Binary(12)
   token       Json
-
-  @@index([addressHash])
 }
