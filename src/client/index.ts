@@ -18,10 +18,24 @@ if (!MPP) {
 
 const logger = new Logger("tRPC");
 
+const getToken = async () => {
+    logger.info("Retrieving API token...");
+    const apiData = await trpc.getToken.query();
+    logger.info("API token retrieved");
+    return apiData.token;
+};
+
 MPP.client.on("hi", async () => {
     logger.info("Setting up...");
-    const status = trpc.status.query();
+    const server = await trpc.status.query();
+    logger.info("Server status:", server.status);
+
+    if (server.status == "offline") {
+        return logger.warn("Server offline");
+    }
+
+    const token = await getToken();
 });
 
-import "./ui";
+// import "./ui";
 import { Logger } from "../util/Logger";
