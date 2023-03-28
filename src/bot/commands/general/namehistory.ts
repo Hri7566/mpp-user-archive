@@ -1,4 +1,4 @@
-import { Data } from "../../../data";
+import { Data } from "../../../data/idb";
 import { Command, CommandHandler } from "../Command";
 
 export const NAMEHISTORY = new Command(

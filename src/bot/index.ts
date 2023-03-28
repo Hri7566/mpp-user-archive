@@ -1,16 +1,17 @@
 import type { ChatMessage, Participant, MPP as TMPP } from "../MPP";
 import { CommandHandler, CommandMessage } from "./commands/Command";
-import { Data, User } from "../data";
+import { Data, User } from "../data/idb";
 
 const MPP = (globalThis as any).MPP as TMPP;
 
 export class Bot {
     public static client = MPP.client;
+    public static logger = new Logger("Bot");
 
     public static async start() {
         Data.start();
         this.bindEventListeners();
-        console.log("Bot loaded");
+        this.logger.info("Loaded");
     }
 
     public static bindEventListeners() {
@@ -54,6 +55,7 @@ export class Bot {
 }
 
 import "./commands";
+import { Logger } from "../util/Logger";
 
 (async () => {
     await Bot.start();

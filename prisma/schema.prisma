@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  mppUser   MPPUser @relation(fields: [mppUserId], references: [id])
+  mppUserId String  @db.VarChar(512)
+
+  nameHistory   NameHistory @relation(fields: [nameHistoryId], references: [id])
+  nameHistoryId Int
+
+  @@index([mppUserId])
+  @@index([nameHistoryId])
+}
+
+model MPPUser {
+  id    String @id @db.VarChar(24)
+  name  String @db.VarChar(512)
+  color String @db.VarChar(16)
+  User  User[]
+}
+
+model NameHistory {
+  id    Int    @id @unique @default(autoincrement())
+  names Json
+  User  User[]
+}
+
+model Inventory {
+  id Int @id @unique @default(autoincrement())
+}

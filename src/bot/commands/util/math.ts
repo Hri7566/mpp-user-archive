@@ -5,9 +5,9 @@ export const MATH = new Command(
     "math",
     ["math"],
     (msg, cl) => {
+        if (!msg.argcat) return "Error: No input";
         try {
             const out = math.evaluate(msg.argcat);
-            console.log(out);
             return `Output: ${out.toString()}`;
         } catch (err) {
             console.error(err);

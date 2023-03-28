@@ -1,14 +1,18 @@
-import type { PermissionGroup } from "./data";
+import type { PermissionGroup } from "./data/idb";
 
 export class Permissions {
     public static groups: PermissionGroup[] = [
         {
             id: "user",
-            permissions: ["command.general.*"]
+            permissions: [
+                "command.general.*",
+                "command.util.color",
+                "command.util.math"
+            ]
         },
         {
             id: "admin",
-            permissions: ["command.data.*", "command.util.*"]
+            permissions: ["command.*", "command.*"]
         }
     ];
 
