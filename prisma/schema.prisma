@@ -45,6 +45,7 @@ model ColorHistory {
 }
 
 model ApiAuth {
-  addressHash Bytes @id @unique @db.Binary(12)
-  token       Json
+  addressHash Bytes  @id @unique @db.Binary(12)
+  token       String @db.VarChar(61)
+  groups      Json
 }

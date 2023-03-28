@@ -11,10 +11,13 @@ const publicProcedure = t.procedure;
 
 export const appRouter = router({
     status: t.procedure.query(req => {
+        console.log((req.ctx as any).api_id.toString("hex"));
         return {
             status: "online"
         };
-    })
+    }),
+
+    getToken: t.procedure.query(req => {})
 });
 
 export type AppRouter = typeof appRouter;
