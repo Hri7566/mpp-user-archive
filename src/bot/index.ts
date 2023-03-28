@@ -1,11 +1,18 @@
-import type { ChatMessage, Participant, MPP as TMPP } from "../MPP";
+import type {
+    ChatMessage,
+    Participant,
+    MPP as TMPP,
+    Client
+} from "../client/MPP";
 import { CommandHandler, CommandMessage } from "./commands/Command";
 import { Data, User } from "../data/idb";
 
-const MPP = (globalThis as any).MPP as TMPP;
+// const MPP = (globalThis as any).MPP as TMPP;
+const MPPClient = require("mppclone-client");
 
 export class Bot {
-    public static client = MPP.client;
+    // public static client = MPP.client;
+    public static client: Client = new MPPClient("wss://mppclone.com");
     public static logger = new Logger("Bot");
 
     public static async start() {

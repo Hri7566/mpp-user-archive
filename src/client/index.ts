@@ -1,6 +1,6 @@
 import type { MPP as TMPP } from "./MPP";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
-import type { AppRouter } from "./api/trpc";
+import type { AppRouter } from "../api/trpc";
 
 const trpc = createTRPCProxyClient<AppRouter>({
     links: [
@@ -19,17 +19,9 @@ if (!MPP) {
 const logger = new Logger("tRPC");
 
 MPP.client.on("hi", async () => {
-    const data = await trpc.defaultUser.query();
-    logger.debug("Received user data:", data);
-
-    MPP.client.sendArray([
-        {
-            m: "userset",
-            set: data
-        }
-    ]);
+    logger.info("Setting up...");
+    const setupData = trpc.setupData.query();
 });
 
-import "./bot";
 import "./ui";
-import { Logger } from "./util/Logger";
+import { Logger } from "../util/Logger";

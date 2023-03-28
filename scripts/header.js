@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        mpp-browser-bot
+// @name        mpp-user-archive
 // @namespace   Violentmonkey Scripts
 // @match       https://mppclone.com/*
 // @grant       none

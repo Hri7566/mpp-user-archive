@@ -1,4 +1,4 @@
-import type { PermissionGroup } from "./data/idb";
+import type { PermissionGroup } from "../data/idb";
 
 export class Permissions {
     public static groups: PermissionGroup[] = [
