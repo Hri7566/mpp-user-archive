@@ -10,7 +10,11 @@ const router = t.router;
 const publicProcedure = t.procedure;
 
 export const appRouter = router({
-    setupData: t.procedure.query(req => {})
+    status: t.procedure.query(req => {
+        return {
+            status: "online"
+        };
+    })
 });
 
 export type AppRouter = typeof appRouter;

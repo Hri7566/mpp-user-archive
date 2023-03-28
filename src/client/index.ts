@@ -20,7 +20,7 @@ const logger = new Logger("tRPC");
 
 MPP.client.on("hi", async () => {
     logger.info("Setting up...");
-    const setupData = trpc.setupData.query();
+    const status = trpc.status.query();
 });
 
 import "./ui";

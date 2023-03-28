@@ -15,11 +15,14 @@ model User {
   mppUser   MPPUser @relation(fields: [mppUserId], references: [id])
   mppUserId String  @db.VarChar(512)
 
-  nameHistory   NameHistory @relation(fields: [nameHistoryId], references: [id])
-  nameHistoryId Int
+  nameHistory    NameHistory   @relation(fields: [nameHistoryId], references: [id])
+  nameHistoryId  Int
+  ColorHistory   ColorHistory? @relation(fields: [colorHistoryId], references: [id])
+  colorHistoryId Int?
 
   @@index([mppUserId])
   @@index([nameHistoryId])
+  @@index([colorHistoryId])
 }
 
 model MPPUser {
@@ -35,6 +38,15 @@ model NameHistory {
   User  User[]
 }
 
-model Inventory {
-  id Int @id @unique @default(autoincrement())
+model ColorHistory {
+  id     Int    @id @unique @default(autoincrement())
+  colors Json
+  User   User[]
+}
+
+model APIAuth {
+  addressHash Bytes @id @unique
+  token       Json
+
+  @@index([addressHash])
 }

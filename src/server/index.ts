@@ -3,7 +3,7 @@
 import { config as dotEnvConfig } from "dotenv";
 dotEnvConfig();
 import { prisma } from "../data/prisma";
-import { app } from "../api/express";
+import { app } from "../api/fastify";
 import { Logger } from "../util/Logger";
 
 export class Server {

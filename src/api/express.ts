@@ -13,12 +13,6 @@ export const createContext = ({
 
 export const app = express();
 
-app.get("*", (req, res) => {
-    res.send({
-        status: "online"
-    }).end();
-});
-
 app.use(cors());
 
 app.use(
