@@ -12,7 +12,7 @@ model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-  mppUser   MPPUser @relation(fields: [mppUserId], references: [id])
+  mppUser   MppUser @relation(fields: [mppUserId], references: [id])
   mppUserId String  @db.VarChar(512)
 
   nameHistory    NameHistory   @relation(fields: [nameHistoryId], references: [id])
@@ -25,7 +25,7 @@ model User {
   @@index([colorHistoryId])
 }
 
-model MPPUser {
+model MppUser {
   id    String @id @db.VarChar(24)
   name  String @db.VarChar(512)
   color String @db.VarChar(16)
@@ -44,7 +44,7 @@ model ColorHistory {
   User   User[]
 }
 
-model APIAuth {
+model ApiAuth {
   addressHash Bytes @id @unique @db.Binary(12)
   token       Json
 }
