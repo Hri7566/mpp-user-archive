@@ -1,5 +1,5 @@
-console.log("Building server...");
-console.time("Done server");
+console.log("Building web...");
+console.time("Done web");
 
 require("dotenv").config();
 const esbuild = require("esbuild");
@@ -9,24 +9,18 @@ const isProd = process.env.NODE_ENV == "production";
 
 (async () => {
     const result = await esbuild.build({
-        entryPoints: ["src/server/index.ts"],
+        entryPoints: ["src/web/index.ts"],
         bundle: true,
         minify: false,
         minifySyntax: false,
         minifyWhitespace: false,
-        outfile: "build/server.js",
+        outdir: "build/web",
         platform: "node",
         target: ["node19.8.1"],
         sourcemap: false,
-        metafile: true
+        metafile: true,
+        format: "cjs"
     });
-
-    // console.log(
-    //     await esbuild.analyzeMetafile(result.metafile, {
-    //         verbose: false,
-    //         color: true
-    //     })
-    // );
 })();
 
-console.timeEnd("Done server");
+console.timeEnd("Done web");

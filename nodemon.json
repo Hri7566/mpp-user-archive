@@ -1,5 +1,5 @@
 {
-    "ext": "js,ts,json,jsx,tsx",
+    "ext": "js,ts,json,jsx,tsx,html,css",
     "include": ["src/**/*", "build.js"],
     "ignore": ["build/**/*", "node_modules/**/*"]
 }

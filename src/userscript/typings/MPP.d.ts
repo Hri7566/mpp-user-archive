@@ -2,9 +2,13 @@ import type { EventEmitter } from "node:events";
 
 declare interface Participant {
     _id: string;
-    id?: string;
+    id: string;
     name: string;
     color: string;
+    tag?: {
+        text: string;
+        color: string;
+    };
 }
 
 declare type ChannelSettings = Record<string, string | number | boolean>;
@@ -23,7 +27,7 @@ declare interface Channel {
         endPos: {
             x: number | string;
             y: number | string;
-        }
+        };
         time: number;
         userId: string;
     };
@@ -63,7 +67,7 @@ export declare class Client {
     public start();
     public stop();
     public connect();
-    public sendArray(arr: {m: string, [key: string]: any}[]);
+    public sendArray(arr: { m: string; [key: string]: any }[]);
     public send(data: string);
     public setChannel(_id: string, set: Partial<ChannelSettings>);
     public on(evt: string, func: (...args: any[]) => void);
@@ -72,5 +76,5 @@ export declare class Client {
 }
 
 export declare class MPP {
-    const client: Client;
+    client: Client;
 }

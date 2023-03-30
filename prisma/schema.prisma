@@ -19,17 +19,21 @@ model User {
   nameHistoryId  Int
   ColorHistory   ColorHistory? @relation(fields: [colorHistoryId], references: [id])
   colorHistoryId Int?
+  TagHistory     TagHistory?   @relation(fields: [tagHistoryId], references: [id])
+  tagHistoryId   Int?
 
   @@index([mppUserId])
   @@index([nameHistoryId])
   @@index([colorHistoryId])
+  @@index([tagHistoryId])
 }
 
 model MppUser {
-  id    String @id @db.VarChar(24)
-  name  String @db.VarChar(512)
-  color String @db.VarChar(16)
-  User  User[]
+  id       String   @id @db.VarChar(24)
+  name     String   @db.VarChar(512)
+  color    String   @db.VarChar(16)
+  User     User[]
+  lastSeen DateTime
 }
 
 model NameHistory {
@@ -40,8 +44,14 @@ model NameHistory {
 
 model ColorHistory {
   id     Int    @id @unique @default(autoincrement())
-  colors Json
+  colors Json   @db.Json
   User   User[]
+}
+
+model TagHistory {
+  id   Int    @id @unique @default(autoincrement())
+  tags Json   @db.Json
+  User User[]
 }
 
 model ApiAuth {

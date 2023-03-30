@@ -3,7 +3,7 @@ import type {
     Participant,
     MPP as TMPP,
     Client
-} from "../client/MPP";
+} from "../userscript/typings/MPP";
 import { CommandHandler, CommandMessage } from "./commands/Command";
 import { Data, User } from "../data/idb";
 
@@ -16,6 +16,7 @@ export class Bot {
     public static logger = new Logger("Bot");
 
     public static async start() {
+        // this.client.start()
         Data.start();
         this.bindEventListeners();
         this.logger.info("Loaded");
