@@ -1,6 +1,6 @@
 import { get, set, del, update, clear } from "idb-keyval";
 import { CommandHandler } from "../bot/commands/Command";
-import { Permissions } from "../userscript/permissions";
+import { Permissions } from "../bot/permissions";
 import type { ChatMessage, Participant } from "../userscript/typings/MPP";
 
 const USERID_KEY_PREFIX = `user-`;

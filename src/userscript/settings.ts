@@ -1,1 +1,3 @@
-export let enableArchive = true;
+export class Settings {
+    public static enableArchive = true;
+}

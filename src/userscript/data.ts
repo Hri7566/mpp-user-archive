@@ -9,8 +9,7 @@ const DATA_INTERVAL = 3000;
 let dataInterval: ReturnType<typeof setInterval>;
 let collecting = false;
 
-export const startDataCollection = async () => {
-    logger.info("Starting service");
+export const startDataCollection = async (apiToken: string) => {
     collecting = true;
 
     dataInterval = setInterval(() => {
@@ -18,6 +17,8 @@ export const startDataCollection = async () => {
     }, DATA_INTERVAL);
 
     collectData();
+
+    logger.info("Collection service started");
 };
 
 export const stopDataCollection = async () => {

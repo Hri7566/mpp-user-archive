@@ -1,4 +1,4 @@
-import { Permissions } from "../../../userscript/permissions";
+import { Permissions } from "../../permissions";
 import { Command, CommandHandler } from "../Command";
 
 export const PERMS = new Command(

@@ -283,6 +283,17 @@ export class Server {
             };
         }
     }
+
+    public static async getIDsFromName(name: string) {
+        const nameHistories = await prisma.nameHistory.findMany({
+            where: {
+                names: {
+                    path: "name",
+                    string_contains: name
+                }
+            }
+        });
+    }
 }
 
 Server.start();

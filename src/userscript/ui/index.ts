@@ -1,7 +1,8 @@
 import type { ChatMessage, MPP as TMPP } from "../typings/MPP";
 import $ from "jquery";
 import { Logger } from "../../util/Logger";
-import * as settings from "../settings";
+import { Settings } from "../settings";
+import { reload } from "..";
 
 const MPP = (globalThis as any).MPP as TMPP;
 const logger = new Logger("UI");
@@ -45,8 +46,18 @@ MPP.client.on("hi", () => {
         setTimeout(() => {
             $("#archive-settings .checkbox[name=enable-archive]").prop(
                 "checked",
-                settings.enableArchive
+                Settings.enableArchive
             );
         }, 100);
+    });
+
+    $("#archive-settings .submit").on("click", () => {
+        Settings.enableArchive = $(
+            "#archive-settings .checkbox[name=enable-archive]"
+        ).is(":checked");
+
+        logger.debug(Settings);
+        reload();
+        closeModal();
     });
 });

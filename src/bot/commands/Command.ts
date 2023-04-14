@@ -1,7 +1,7 @@
 import { Bot } from "../";
 import type { ChatMessage, Client } from "../../userscript/typings/MPP";
 import { Data, User } from "../../data/idb";
-import { Permissions } from "../../userscript/permissions";
+import { Permissions } from "../permissions";
 
 export interface CommandMessage extends ChatMessage {
     prefix: string;
