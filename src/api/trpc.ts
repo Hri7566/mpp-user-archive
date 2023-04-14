@@ -43,7 +43,12 @@ export const appRouter = router({
     }),
 
     sendUsers: t.procedure
-        .input(z.object({ users: ZParticipant.array() }))
+        .input(
+            z.object({
+                users: ZParticipant.array(),
+                token: z.string().optional()
+            })
+        )
         .query(async req => {
             // console.log(req.input.users);
             // TODO rate limits

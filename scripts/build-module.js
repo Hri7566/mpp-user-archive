@@ -18,7 +18,10 @@ const isProd = process.env.NODE_ENV == "production";
         platform: "node",
         target: ["node19.8.1"],
         sourcemap: false,
-        metafile: true
+        metafile: true,
+        define: {
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+        },
     });
 })();
 

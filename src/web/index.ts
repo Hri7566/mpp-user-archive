@@ -15,10 +15,19 @@ const { WEB_PORT } = process.env;
 
 const app = express();
 
-const path = resolve(__dirname, "client/");
-logger.debug(path);
+const clientPath = resolve(__dirname, "client/");
+logger.debug(clientPath);
+const reg = express.static(clientPath);
 
-app.use(express.static(path));
+app.use(reg);
+
+app.get("*", (req, res, next) => {
+    if (req.url.includes(".") || req.url == "/") {
+        next();
+    } else {
+        res.sendFile(resolve(clientPath, "index.html"));
+    }
+});
 
 const httpServer = app.listen(WEB_PORT, () => {
     logger.info("Web server listening on port " + WEB_PORT);

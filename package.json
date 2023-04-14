@@ -6,10 +6,12 @@
     "scripts": {
         "build": "node scripts/build.js",
         "watch": "nodemon scripts/build.js",
-        "dev": "yarn build && yarn start",
         "start": "node .",
+        "start:web": "node build/web",
+        "dev": "yarn build && yarn start",
+        "dev:web": "yarn build && yarn start:web",
         "pscale": "pscale connect mpp main --port 3309",
-        "pscale-dev": "pscale connect mpp init --port 3309"
+        "pscale:dev": "pscale connect mpp init --port 3309"
     },
     "devDependencies": {
         "@types/cors": "^2.8.13",
