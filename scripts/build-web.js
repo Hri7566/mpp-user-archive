@@ -31,6 +31,9 @@ const isProd = process.env.NODE_ENV == "production";
         platform: "browser",
         target: ["chrome58"],
         metafile: true,
+        define: {
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+        },
         plugins: [
             htmlPlugin({
                 files: [
