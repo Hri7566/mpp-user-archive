@@ -59,6 +59,13 @@ export const appRouter = router({
         .input(z.object({ id: z.string() }))
         .query(async req => {
             return await Server.getNameHistory(req.input.id);
+        }),
+
+    getIDsFromName: t.procedure
+        .input(z.object({ name: z.string() }))
+        .query(async req => {
+            console.log("thing called");
+            return await Server.getIDsFromName(req.input.name);
         })
 });
 

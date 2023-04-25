@@ -241,6 +241,11 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.5.0.tgz#57618e57942a5f0131374a9fdb0167e25a117fdc"
   integrity sha512-bkUDCp8o1MvFO+qxkODcbhSqRa6P2GXgrGZVpt0dCXNW2HCSCqYI0ZoAqEOSAjRWmmlKcYgFvN4B4S+zo/f8kg==
 
+"@t3-oss/env-core@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@t3-oss/env-core/-/env-core-0.2.0.tgz#f0ec6a6e6ef4ad6542093d2a27c847de9d06a376"
+  integrity sha512-wLccO5kbyRzcTvaHTctrQLS6oYDdgWiA7ARg5nGEYqxrLK6dFv5WPJHWOYp2BzHufDFN4KtFFjg9FTv7RV0jWg==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"

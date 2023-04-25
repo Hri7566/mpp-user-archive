@@ -10,6 +10,18 @@ import { Logger } from "../util/Logger";
 import { IDCrypto } from "./IDCrypto";
 import type { Participant } from "../userscript/typings/MPP";
 
+interface Status {
+    status: string;
+}
+
+interface ErrorStatus extends Status {
+    error: string;
+}
+
+interface DataStatus<T> extends Status {
+    data: T;
+}
+
 export class Server {
     public static app = app;
     public static logger = new Logger("Server");
@@ -244,7 +256,9 @@ export class Server {
         }
     }
 
-    public static async getNameHistory(mppUserId: string) {
+    public static async getNameHistory(
+        mppUserId: string
+    ): Promise<ErrorStatus | DataStatus<string[]>> {
         const user = await prisma.user.findFirst({
             where: {
                 mppUserId
@@ -253,7 +267,8 @@ export class Server {
 
         if (user == null) {
             return {
-                status: "No users found"
+                status: "error",
+                error: "Not found"
             };
         }
 
@@ -265,13 +280,14 @@ export class Server {
 
         if (!nameHistory) {
             return {
-                status: "User has no name history"
+                status: "error",
+                error: "User has no name history"
             };
         }
 
         try {
             return {
-                status: "Names found",
+                status: "ok",
                 data: (nameHistory.names as { name: string; t: number }[]).map(
                     hist => hist.name
                 )
@@ -279,7 +295,7 @@ export class Server {
         } catch (err) {
             return {
                 status: "error",
-                error: err
+                error: err as string
             };
         }
     }
@@ -293,6 +309,8 @@ export class Server {
                 }
             }
         });
+
+        this.logger.debug(nameHistories);
     }
 }
 

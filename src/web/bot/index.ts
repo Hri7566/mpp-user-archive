@@ -1,4 +1,5 @@
 import { Logger } from "../../util/Logger";
+import { trpc } from "../trpc";
 import { Command } from "./Command";
 
 export class Bot {
@@ -45,31 +46,82 @@ Bot.addCommand({
     aliases: ["help", "h", "commands", "cmds"],
     description: "Get info about commands.",
     usage: "[command]",
-    callback: () => {
-        // TODO args
-        return (
-            "Commands: " +
-            Bot.commands.map(command => command.aliases[0]).join(" | ")
-        );
+    callback: input => {
+        const args = input.split(" ");
+        const argcat = input.substring(args[0].length).trim();
+
+        if (args[1]) {
+            const command = Bot.commands.find(
+                z => z.aliases.indexOf(args[1].toLowerCase()) !== -1
+            );
+            if (command)
+                return `Description: ${command.description} | Usage: ${command.aliases[0]} ${command.usage}`;
+            else return `No help found for "${argcat}".`;
+        } else {
+            return (
+                "Commands: " +
+                Bot.commands.map(command => command.aliases[0]).join(" | ")
+            );
+        }
     }
 });
 
 Bot.addCommand({
     id: "ids",
     aliases: ["ids", "i", "_ids", "_i", "id", "_id"],
-    description: "Match user IDs with usernames.",
+    description: "Find a user's name with their user ID.",
     usage: "<username>",
-    callback: () => {
-        return "ids placeholder";
+    callback: async (input: string) => {
+        const args = input.split(" ");
+        const argcat = input.substring(args[0].length).trim();
+
+        if (!argcat) {
+            return "Please provide an argument.";
+        }
+
+        const data = await trpc.getIDsFromName.query({
+            name: argcat
+        });
+
+        // if (data.status == "ok") {
+        //     const ids = (data as { status: "ok"; data: string[] }).data;
+
+        //     return `IDs: ${ids.join(" | ")}`;
+        // } else {
+        //     return `Error: ${
+        //         (data as { status: "error"; error: string }).error
+        //     }`;
+        // }
+
+        return "not finished";
     }
 });
 
 Bot.addCommand({
     id: "names",
     aliases: ["names", "name", "n"],
-    description: "Match usernames with user IDs.",
+    description: "Find a user's ID with their username",
     usage: "<user_id>",
-    callback: () => {
-        return "names placeholder";
+    callback: async (input: string) => {
+        const args = input.split(" ");
+        const argcat = input.substring(args[0].length).trim();
+
+        if (!argcat) {
+            return "Please provide an argument.";
+        }
+
+        const data = await trpc.getNameHistory.query({
+            id: argcat
+        });
+
+        if (data.status == "ok") {
+            const names = (data as { status: "ok"; data: string[] }).data;
+
+            return `Names: ${names.join(" | ")}`;
+        } else {
+            return `Error: ${
+                (data as { status: "error"; error: string }).error
+            }`;
+        }
     }
 });
