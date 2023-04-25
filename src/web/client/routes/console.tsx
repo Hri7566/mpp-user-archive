@@ -4,11 +4,7 @@ import { ConsoleOutput } from "../components/console/ConsoleOutput";
 import { trpc } from "../client";
 
 export const WebConsole = () => {
-    const [key, setKey] = useState(1);
-
-    const [content, setContent] = useState([
-        <p key={0}>Commands - help, ids, names</p>
-    ]);
+    const [content, setContent] = useState(["Commands - help, ids, names"]);
 
     return (
         <>
@@ -18,32 +14,25 @@ export const WebConsole = () => {
                 className="flex-grow overflow-auto overscroll-contain p-3 pt-0 font-mono"
             >
                 <ConsoleOutput>
-                    <ul>{content}</ul>
+                    {content.map((ele, index) => {
+                        return ele === "" ? (
+                            <br key={index} />
+                        ) : (
+                            <li key={index}>{ele}</li>
+                        );
+                    })}
                 </ConsoleOutput>
                 <ConsoleInput
-                    onEnter={(inputText, setInputText) => {
-                        setContent([
-                            ...content,
-                            <>
-                                <br />
-                                <p key={key}>{inputText}</p>
-                            </>
-                        ]);
-
-                        setKey(key + 1);
+                    onEnter={async (inputText, setInputText) => {
+                        let newContent = [...content, "", inputText];
+                        setContent(newContent);
                         setInputText("");
 
-                        let args = inputText.split(" ");
-                        let argcat = inputText.substring(args[0].length);
-                        let cmd = args[0].toLowerCase();
+                        const output = await trpc.botCommand.query({
+                            command: inputText
+                        });
 
-                        switch (cmd) {
-                            case "help":
-                                trpc.botCommand.query({
-                                    command: inputText
-                                });
-                                break;
-                        }
+                        setContent([...newContent, output]);
                     }}
                 />
             </div>

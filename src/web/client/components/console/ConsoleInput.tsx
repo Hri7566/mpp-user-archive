@@ -20,7 +20,7 @@ export const ConsoleInput = (
                 }}
                 value={text}
                 onKeyDown={evt => {
-                    if (evt.key == "Enter") {
+                    if (evt.key == "Enter" && text !== "") {
                         props.onEnter(text, setText);
                     }
                 }}
