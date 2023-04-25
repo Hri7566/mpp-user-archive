@@ -20,8 +20,10 @@ const isProd = process.env.NODE_ENV == "production";
         sourcemap: false,
         metafile: true,
         define: {
-            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
-        },
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+            "process.env.PORT": JSON.stringify(process.env.PORT),
+            "process.env.WEB_PORT": JSON.stringify(process.env.WEB_PORT)
+        }
     });
 })();
 
