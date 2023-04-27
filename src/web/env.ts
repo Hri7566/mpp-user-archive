@@ -5,7 +5,8 @@ export const env = createEnv({
     clientPrefix: "",
     server: {
         NODE_ENV: z.string(),
-        WEB_PORT: z.string()
+        WEB_PORT: z.string(),
+        PORT: z.string()
     },
     client: {
         NODE_ENV: z.string(),
@@ -13,6 +14,7 @@ export const env = createEnv({
     },
     runtimeEnvStrict: {
         NODE_ENV: process.env.NODE_ENV,
-        WEB_PORT: process.env.WEB_PORT
+        WEB_PORT: process.env.WEB_PORT,
+        PORT: process.env.PORT
     }
 });

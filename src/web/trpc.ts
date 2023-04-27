@@ -18,7 +18,7 @@ export const trpc = createTRPCProxyClient<AppRouter>({
             url:
                 env.NODE_ENV == "production"
                     ? "https://archive.multiplayerpiano.dev"
-                    : "http://localhost:3000/trpc"
+                    : `http://localhost:${env.PORT}/trpc`
         })
     ]
 });
