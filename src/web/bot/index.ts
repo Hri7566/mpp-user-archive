@@ -83,17 +83,16 @@ Bot.addCommand({
             name: argcat
         });
 
-        // if (data.status == "ok") {
-        //     const ids = (data as { status: "ok"; data: string[] }).data;
+        if (data.status == "ok") {
+            const ids = (data as { status: "ok"; data: string[] }).data;
 
-        //     return `IDs: ${ids.join(" | ")}`;
-        // } else {
-        //     return `Error: ${
-        //         (data as { status: "error"; error: string }).error
-        //     }`;
-        // }
-
-        return "not finished";
+            return `IDs: ${ids.join(" | ")}`;
+        } else {
+            Bot.logger.error(data);
+            return `Error: ${
+                (data as { status: "error"; error: string }).error
+            }`;
+        }
     }
 });
 
@@ -123,5 +122,16 @@ Bot.addCommand({
                 (data as { status: "error"; error: string }).error
             }`;
         }
+    }
+});
+
+Bot.addCommand({
+    id: "totalusers",
+    aliases: ["totalusers", "usertotal"],
+    description: "Get the total amount of users in the database.",
+    usage: "",
+    callback: async (input: string) => {
+        const totalUsers = await trpc.getUserCount.query();
+        return `Total users: ${totalUsers}`;
     }
 });

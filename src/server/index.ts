@@ -8,7 +8,7 @@ import { prisma } from "../data/prisma";
 import { app } from "../api/fastify";
 import { Logger } from "../util/Logger";
 import { IDCrypto } from "./IDCrypto";
-import type { Participant } from "../userscript/typings/MPP";
+import type { Participant } from "../util/MPP";
 
 interface Status {
     status: string;
@@ -300,17 +300,50 @@ export class Server {
         }
     }
 
-    public static async getIDsFromName(name: string) {
-        const nameHistories = await prisma.nameHistory.findMany({
+    public static async getIDsFromName(
+        name: string
+    ): Promise<ErrorStatus | DataStatus<string[]>> {
+        let nameHistories;
+        try {
+            nameHistories = await prisma.nameHistory.findMany({
+                where: {
+                    names: {
+                        path: "$[*].name",
+                        array_contains: name
+                    }
+                }
+            });
+        } catch (err) {
+            this.logger.error(err);
+            return {
+                status: "error",
+                error: "Unable to fetch users"
+            };
+        }
+
+        // this.logger.debug(nameHistories);
+        if (!nameHistories)
+            return {
+                status: "error",
+                error: "Not found"
+            };
+
+        const users = await prisma.user.findMany({
             where: {
-                names: {
-                    path: "name",
-                    string_contains: name
+                nameHistoryId: {
+                    in: nameHistories.map(nh => nh.id)
                 }
             }
         });
 
-        this.logger.debug(nameHistories);
+        return {
+            status: "ok",
+            data: users.map(u => u.mppUserId)
+        };
+    }
+
+    public static async getUserCount() {
+        return await prisma.mppUser.count();
     }
 }
 

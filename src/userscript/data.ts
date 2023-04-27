@@ -1,4 +1,4 @@
-import type { MPP as TMPP, Participant } from "./typings/MPP";
+import type { MPP as TMPP, Participant } from "../util/MPP";
 import { Logger } from "../util/Logger";
 import { trpc } from "./client";
 

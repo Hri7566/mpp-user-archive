@@ -2,14 +2,13 @@ import { createTRPCProxyClient, httpLink } from "@trpc/client";
 import type { AppRouter } from "../api/trpc";
 import { initTRPC } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
-import { Participant } from "../userscript/typings/MPP";
+import { Participant } from "../util/MPP";
 import { Server } from "../server";
 import { Logger } from "../util/Logger";
 import { Context } from ".";
 import { z } from "zod";
 import { Bot } from "./bot";
-
-const env = process.env.NODE_ENV;
+import { env } from "./env";
 
 // our client
 
@@ -17,7 +16,7 @@ export const trpc = createTRPCProxyClient<AppRouter>({
     links: [
         httpLink({
             url:
-                env == "production"
+                env.NODE_ENV == "production"
                     ? "https://archive.multiplayerpiano.dev"
                     : "http://localhost:3000/trpc"
         })

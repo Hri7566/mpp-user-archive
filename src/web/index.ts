@@ -5,49 +5,57 @@ console.time("Started");
 import { config as dotEnvConfig } from "dotenv";
 dotEnvConfig();
 import { resolve } from "node:path";
-import express from "express";
+import { createReadStream } from "node:fs";
+// import express from "express";
 import { trpc, webAppRouter } from "./trpc";
 import { Logger } from "../util/Logger";
-import * as trpcExpress from "@trpc/server/adapters/express";
+// import * as trpcExpress from "@trpc/server/adapters/express";
 import { inferAsyncReturnType } from "@trpc/server";
+import fastify from "fastify";
+import {
+    CreateFastifyContextOptions,
+    fastifyTRPCPlugin
+} from "@trpc/server/adapters/fastify";
 
-export const createContext = ({
-    req,
-    res
-}: trpcExpress.CreateExpressContextOptions) => ({});
+import fastifyStatic from "@fastify/static";
+import { env } from "./env";
+("@fastify/static");
 
 const logger = new Logger("Web Server");
 
 const { WEB_PORT } = process.env;
 
-const app = express();
+const app = fastify();
 
-app.use(
-    "/trpc",
-    trpcExpress.createExpressMiddleware({
-        router: webAppRouter,
-        createContext
-    })
-);
+export const createContext = ({ req, res }: CreateFastifyContextOptions) => {
+    return {};
+};
 
+app.register(fastifyTRPCPlugin, {
+    prefix: "/trpc",
+    trpcOptions: { router: webAppRouter, createContext }
+});
 
 const clientPath = resolve(__dirname, "client/");
-logger.debug(clientPath);
-const reg = express.static(clientPath);
 
-app.use(reg);
+app.register(fastifyStatic, {
+    root: clientPath,
+    prefix: "/"
+});
 
-app.get("*", (req, res, next) => {
-    if (req.url.includes(".") || req.url == "/") {
-        next();
-    } else {
-        res.sendFile(resolve(clientPath, "index.html"));
+app.get("/console", (req, res) => {
+    res.sendFile("index.html");
+});
+
+const httpServer = app.listen(
+    {
+        port: parseInt(env.WEB_PORT)
+    },
+    err => {
+        if (err) return logger.error("Error starting web server:", err);
+        logger.info("Web server listening on port " + env.WEB_PORT);
     }
-});
-
-const httpServer = app.listen(WEB_PORT, () => {
-    logger.info("Web server listening on port " + WEB_PORT);
-});
+);
 
 trpc.getToken.query().then(t => {
     logger.info("Token:", t);

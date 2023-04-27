@@ -4,7 +4,11 @@ import { ConsoleOutput } from "../components/console/ConsoleOutput";
 import { trpc } from "../client";
 
 export const WebConsole = () => {
-    const [content, setContent] = useState(["Commands: help | ids | names"]);
+    const [content, setContent] = useState([
+        `
+        Type "help" to view commands.
+    `
+    ]);
 
     return (
         <>

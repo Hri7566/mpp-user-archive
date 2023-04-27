@@ -1,6 +1,6 @@
 import type { EventEmitter } from "node:events";
 
-declare interface Participant {
+export declare interface Participant {
     _id: string;
     id: string;
     name: string;
@@ -9,6 +9,12 @@ declare interface Participant {
         text: string;
         color: string;
     };
+    vanished?: boolean;
+}
+
+export declare interface ParticipantInfo extends Participant {
+    x: string | number;
+    y: string | number;
 }
 
 declare type ChannelSettings = Record<string, string | number | boolean>;
@@ -17,7 +23,7 @@ declare interface Channel {
     _id: string;
     id: string;
     count: number;
-    crown: {
+    crown?: {
         userId: string;
         participantId?: string;
         startPos: {
@@ -34,14 +40,46 @@ declare interface Channel {
     settings: ChannelSettings;
 }
 
-export declare interface ChatMessage {
+declare interface ChannelInfo extends Channel {
+    banned?: boolean;
+}
+
+export declare interface AccountInfo {
+    type: "discord";
+    username: string;
+    discriminator: string;
+    avatar: string;
+}
+
+export declare interface InboundChatMessage {
     m: "a";
     a: string;
     p: Participant;
     t: number;
 }
 
-export declare class Client {
+export declare interface InboundHiMessage {
+    m: "hi";
+    t: EpochTimeStamp;
+    u: Participant;
+    token: string;
+    permissions: Record<string, any>;
+    accountInfo: AccountInfo;
+}
+
+export declare interface InboundListMessage {
+    m: "ls";
+    c: boolean;
+    u: ChannelInfo[];
+}
+
+export declare interface InboundChannelMessage {
+    m: "ch";
+    ch: ChannelInfo;
+    ppl: Participant[];
+}
+
+export declare class Client extends EventEmitter {
     public ws: WebSocket;
     public accountInfo: any;
     public canConnect: boolean;
@@ -69,10 +107,10 @@ export declare class Client {
     public connect();
     public sendArray(arr: { m: string; [key: string]: any }[]);
     public send(data: string);
-    public setChannel(_id: string, set: Partial<ChannelSettings>);
-    public on(evt: string, func: (...args: any[]) => void);
-    public off(evt: string, func: (...args: any[]) => void);
-    public emit(evt: string, ...args: any[]);
+    public setChannel(_id: string, set?: Partial<ChannelSettings>);
+    // public on(evt: string, func: (...args: any[]) => void);
+    // public off(evt: string, func: (...args: any[]) => void);
+    // public emit(evt: string, ...args: any[]);
 }
 
 export declare class MPP {

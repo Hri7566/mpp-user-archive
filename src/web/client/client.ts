@@ -1,16 +1,15 @@
 import { createTRPCProxyClient } from "@trpc/client";
 import { WebAppRouter } from "../trpc";
 import { httpLink } from "@trpc/client";
-
-const { NODE_ENV, WEB_PORT } = process.env;
+import { env } from "../env";
 
 export const trpc = createTRPCProxyClient<WebAppRouter>({
     links: [
         httpLink({
             url:
-                NODE_ENV == "production"
-                    ? `https://archive.multiplayerpiano.dev:${WEB_PORT}`
-                    : `http://localhost:${WEB_PORT}/trpc`
+                env.NODE_ENV == "production"
+                    ? `https://archive.multiplayerpiano.dev:${env.WEB_PORT}`
+                    : `http://localhost:${env.WEB_PORT}/trpc`
         })
     ]
 });

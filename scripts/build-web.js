@@ -21,7 +21,14 @@ const isProd = process.env.NODE_ENV == "production";
         target: ["node19.8.1"],
         sourcemap: false,
         metafile: true,
-        format: "cjs"
+        format: "cjs",
+        define: {
+            "process.env": JSON.stringify({
+                NODE_ENV: process.env.NODE_ENV,
+                PORT: process.env.PORT,
+                WEB_PORT: process.env.WEB_PORT
+            })
+        }
     });
 
     const clientResult = await esbuild.build({

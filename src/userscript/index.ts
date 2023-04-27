@@ -1,4 +1,4 @@
-import type { MPP as TMPP } from "./typings/MPP";
+import type { InboundChannelMessage, MPP as TMPP } from "../util/MPP";
 
 const MPP = (globalThis as any).MPP as TMPP;
 
@@ -32,6 +32,10 @@ const start = async () => {
     }
 };
 
+const stop = async () => {
+    stopDataCollection();
+};
+
 export const reload = async () => {
     logger.info("Reloading...");
     start();
@@ -44,6 +48,14 @@ MPP.client.on("hi", async () => {
 MPP.client.on("disconnect", async () => {
     logger.info("Lost connection to MPP server");
     stopDataCollection();
+});
+
+MPP.client.on("ch", async (msg: InboundChannelMessage) => {
+    if (msg.ch.settings.noindex == true) {
+        stop();
+    } else {
+        start();
+    }
 });
 
 import "./ui";

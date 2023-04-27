@@ -1,7 +1,7 @@
 import { get, set, del, update, clear } from "idb-keyval";
-import { CommandHandler } from "../bot/commands/Command";
+import { CommandHandler } from "../bot/old/commands/Command";
 import { Permissions } from "../bot/permissions";
-import type { ChatMessage, Participant } from "../userscript/typings/MPP";
+import type { InboundChatMessage, Participant } from "../util/MPP";
 
 const USERID_KEY_PREFIX = `user-`;
 
@@ -23,7 +23,7 @@ export interface PermissionGroup {
     permissions: string[];
 }
 
-export interface CommandMessage extends ChatMessage {
+export interface CommandMessage extends InboundChatMessage {
     prefix: string;
     user: User;
 }

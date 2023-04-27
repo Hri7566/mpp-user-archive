@@ -1,9 +1,9 @@
 import { initTRPC } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
-import { Participant } from "../userscript/typings/MPP";
+import { Participant } from "../util/MPP";
 import { Server } from "../server";
 import { Logger } from "../util/Logger";
-import { Context } from "./express";
+import { Context } from "./fastify";
 import { z } from "zod";
 
 const t = initTRPC.context<Context>().create();
@@ -25,6 +25,7 @@ const ZParticipant = z.object({
         .optional()
 });
 
+// TODO rate limits
 export const appRouter = router({
     status: t.procedure.query(req => {
         return {
@@ -50,8 +51,6 @@ export const appRouter = router({
             })
         )
         .query(async req => {
-            // console.log(req.input.users);
-            // TODO rate limits
             return await Server.saveUsers(req.input.users);
         }),
 
@@ -64,9 +63,12 @@ export const appRouter = router({
     getIDsFromName: t.procedure
         .input(z.object({ name: z.string() }))
         .query(async req => {
-            console.log("thing called");
             return await Server.getIDsFromName(req.input.name);
-        })
+        }),
+
+    getUserCount: t.procedure.query(async req => {
+        return await Server.getUserCount();
+    })
 });
 
 export type AppRouter = typeof appRouter;

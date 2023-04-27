@@ -1,9 +1,9 @@
 import { Bot } from "../";
-import type { ChatMessage, Client } from "../../userscript/typings/MPP";
-import { Data, User } from "../../data/idb";
+import type { InboundChatMessage, Client } from "../../../util/MPP";
+import { Data, User } from "../../../data/idb";
 import { Permissions } from "../permissions";
 
-export interface CommandMessage extends ChatMessage {
+export interface CommandMessage extends InboundChatMessage {
     prefix: string;
     alias: string;
     user: User;

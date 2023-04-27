@@ -1,4 +1,4 @@
-console.log("Building server...");
+console.log("Building module...");
 console.time("Done module");
 
 require("dotenv").config();

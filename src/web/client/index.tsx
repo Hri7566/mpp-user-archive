@@ -1,7 +1,6 @@
 import "./app.css";
-import React, { ReactComponentElement, ReactElement, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import { Background } from "./components/Background";
 import {
     BrowserRouter,
     createBrowserRouter,
@@ -26,9 +25,9 @@ const App = () => {
     return (
         <>
             <header>
-                <h1 id="title" className="text-4xl p-4 font-bold">
+                <a id="title" className="text-4xl p-4 font-bold" href="/">
                     MPP User Archive
-                </h1>
+                </a>
                 {/* <nav id="navbar" className="items-end justify-end">
                     <ul>
                         <Link to="/">Home</Link>
@@ -43,6 +42,13 @@ const App = () => {
                 <RouterProvider router={router} />
                 {/* </div> */}
             </div>
+            <footer className="text-lg">
+                &copy;{" "}
+                <a href="https://hri7566.info" className="text-[#8d3f50]">
+                    Hri7566
+                </a>{" "}
+                2023 All rights reserved
+            </footer>
         </>
     );
 };

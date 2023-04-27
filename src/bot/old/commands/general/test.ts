@@ -1,4 +1,4 @@
-import { Data } from "../../../data/idb";
+import { Data } from "../../../../data/idb";
 import { Command, CommandHandler } from "../Command";
 
 export const TEST = new Command(

@@ -1,4 +1,4 @@
-import type { ChatMessage, MPP as TMPP } from "../typings/MPP";
+import type { InboundChatMessage, MPP as TMPP } from "../../util/MPP";
 import $ from "jquery";
 import { Logger } from "../../util/Logger";
 import { Settings } from "../settings";

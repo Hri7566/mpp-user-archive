@@ -24,6 +24,7 @@ export const ConsoleInput = (
                         props.onEnter(text, setText);
                     }
                 }}
+                // placeholder={`Type "help" to view commands.`}
             />
         </>
     );

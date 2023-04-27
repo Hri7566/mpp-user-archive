@@ -1,5 +1,5 @@
-console.log("Building server...");
-console.time("Done server");
+console.log("Building bot...");
+console.time("Done bot");
 
 require("dotenv").config();
 const esbuild = require("esbuild");
@@ -9,12 +9,12 @@ const isProd = process.env.NODE_ENV == "production";
 
 (async () => {
     const result = await esbuild.build({
-        entryPoints: ["src/server/index.ts"],
+        entryPoints: ["src/bot/index.ts"],
         bundle: true,
         minify: false,
         minifySyntax: false,
         minifyWhitespace: false,
-        outfile: "build/server.js",
+        outfile: "build/bot.js",
         platform: "node",
         target: ["node19.8.1"],
         sourcemap: false,
@@ -23,18 +23,10 @@ const isProd = process.env.NODE_ENV == "production";
             "process.env": JSON.stringify({
                 NODE_ENV: process.env.NODE_ENV,
                 PORT: process.env.PORT,
-                WEB_PORT: process.env.WEB_PORT,
-                API_SALT: process.env.API_SALT
+                WEB_PORT: process.env.WEB_PORT
             })
         }
     });
-
-    // console.log(
-    //     await esbuild.analyzeMetafile(result.metafile, {
-    //         verbose: false,
-    //         color: true
-    //     })
-    // );
 })();
 
-console.timeEnd("Done server");
+console.timeEnd("Done bot");
