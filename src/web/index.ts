@@ -2,8 +2,6 @@
 console.log("Starting web server...");
 console.time("Started");
 
-import { config as dotEnvConfig } from "dotenv";
-dotEnvConfig();
 import { resolve } from "node:path";
 import { createReadStream } from "node:fs";
 // import express from "express";
@@ -58,7 +56,7 @@ const httpServer = app.listen(
 );
 
 trpc.getToken.query().then(t => {
-    logger.info("Token:", t);
+    // logger.info("Token:", t);
 });
 
 export type Context = inferAsyncReturnType<typeof createContext>;

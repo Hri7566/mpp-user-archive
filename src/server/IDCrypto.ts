@@ -1,12 +1,9 @@
-import { config as dotEnvConfig } from "dotenv";
-dotEnvConfig();
+import { env } from "./env";
 import crypto from "node:crypto";
 import { prisma } from "../data/prisma";
 import { Logger } from "../util/Logger";
 
-const { API_SALT } = process.env;
-
-if (typeof API_SALT == "undefined") {
+if (typeof env.API_SALT == "undefined") {
     throw `No API salt in environment`;
 }
 
@@ -16,7 +13,7 @@ export class IDCrypto {
     public static generateAPIHash(ip: string) {
         const hash = crypto.createHash("sha256");
         hash.update(ip);
-        hash.update(API_SALT as string);
+        hash.update(env.API_SALT as string);
         return Buffer.from(hash.digest().buffer.slice(0, 12));
     }
 

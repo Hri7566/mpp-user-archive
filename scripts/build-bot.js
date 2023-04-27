@@ -23,7 +23,8 @@ const isProd = process.env.NODE_ENV == "production";
             "process.env": JSON.stringify({
                 NODE_ENV: process.env.NODE_ENV,
                 PORT: process.env.PORT,
-                WEB_PORT: process.env.WEB_PORT
+                WEB_PORT: process.env.WEB_PORT,
+                MPPCLONE_FINDER_TOKEN: process.env.MPPCLONE_FINDER_TOKEN
             })
         }
     });
