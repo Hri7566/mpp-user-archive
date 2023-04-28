@@ -7,7 +7,7 @@ export const trpc = createTRPCProxyClient<AppRouter>({
         httpLink({
             url:
                 env.NODE_ENV == "production"
-                    ? `https://archive.hri7566.info:${env.PORT}`
+                    ? `https://archive.hri7566.info:${env.SECURE_PORT}`
                     : `http://localhost:${env.PORT}/trpc`
         })
     ]

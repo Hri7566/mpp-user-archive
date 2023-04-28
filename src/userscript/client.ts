@@ -1,15 +1,14 @@
 import { createTRPCProxyClient, httpLink } from "@trpc/client";
 import type { AppRouter } from "../api/trpc";
-
-const { NODE_ENV, PORT } = process.env; // FIXME
+import { env } from "./env";
 
 export const trpc = createTRPCProxyClient<AppRouter>({
     links: [
         httpLink({
             url:
-                NODE_ENV == "production"
-                    ? `https://archive.hri7566.info:${PORT}`
-                    : `http://localhost:${PORT}/trpc`
+                env.NODE_ENV == "production"
+                    ? `https://archive.hri7566.info:${env.SECURE_PORT}`
+                    : `http://localhost:${env.PORT}/trpc`
         })
     ]
 });

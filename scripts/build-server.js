@@ -23,6 +23,7 @@ const isProd = process.env.NODE_ENV == "production";
             "process.env": JSON.stringify({
                 NODE_ENV: process.env.NODE_ENV,
                 PORT: process.env.PORT,
+                SECURE_PORT: process.env.PORT,
                 API_SALT: process.env.API_SALT
             })
         }
