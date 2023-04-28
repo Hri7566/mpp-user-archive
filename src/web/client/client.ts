@@ -8,7 +8,7 @@ export const trpc = createTRPCProxyClient<WebAppRouter>({
         httpLink({
             url:
                 env.NODE_ENV == "production"
-                    ? `https://archive.hri7566.info:${env.WEB_PORT}`
+                    ? `https://archive.hri7566.info:${env.WEB_PORT}/trpc`
                     : `http://localhost:${env.WEB_PORT}/trpc`
         })
     ]
