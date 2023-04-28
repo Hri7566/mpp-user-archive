@@ -10,11 +10,13 @@ export const env = createEnv({
     },
     client: {
         NODE_ENV: z.string(),
+        SECURE_PORT: z.string(),
         WEB_PORT: z.string()
     },
     runtimeEnvStrict: {
         NODE_ENV: process.env.NODE_ENV,
         WEB_PORT: process.env.WEB_PORT,
-        PORT: process.env.PORT
+        PORT: process.env.PORT,
+        SECURE_PORT: process.env.SECURE_PORT
     }
 });
