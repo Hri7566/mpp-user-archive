@@ -6,7 +6,8 @@ export const env = createEnv({
     server: {
         NODE_ENV: z.string(),
         WEB_PORT: z.string(),
-        PORT: z.string()
+        PORT: z.string(),
+        SECURE_PORT: z.string()
     },
     client: {
         NODE_ENV: z.string(),
