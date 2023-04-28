@@ -47,7 +47,8 @@ app.get("/console", (req, res) => {
 
 const httpServer = app.listen(
     {
-        port: parseInt(env.WEB_PORT)
+        port: parseInt(env.WEB_PORT),
+        host: "0.0.0.0"
     },
     err => {
         if (err) return logger.error("Error starting web server:", err);

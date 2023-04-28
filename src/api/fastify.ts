@@ -31,5 +31,6 @@ app.get("/", (req, reply) => {
 });
 
 app.listen({
-    port: PORT
+    port: PORT,
+    host: "0.0.0.0"
 });
