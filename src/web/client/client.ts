@@ -8,7 +8,7 @@ export const trpc = createTRPCProxyClient<WebAppRouter>({
         httpLink({
             url:
                 env.NODE_ENV == "production"
-                    ? `https://archive.multiplayerpiano.dev:${env.WEB_PORT}`
+                    ? `https://archive.hri7566.info:${env.WEB_PORT}`
                     : `http://localhost:${env.WEB_PORT}/trpc`
         })
     ]

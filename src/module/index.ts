@@ -10,7 +10,7 @@ module.exports = createTRPCProxyClient<AppRouter>({
         httpLink({
             url:
                 env == "production"
-                    ? "https://archive.multiplayerpiano.dev"
+                    ? "https://archive.hri7566.info"
                     : "http://localhost:3000/trpc"
         })
     ]
