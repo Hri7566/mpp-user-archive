@@ -44,7 +44,9 @@ const isProd = process.env.NODE_ENV == "production";
             "process.env": JSON.stringify({
                 NODE_ENV: process.env.NODE_ENV,
                 PORT: process.env.PORT,
-                WEB_PORT: process.env.WEB_PORT
+                WEB_PORT: process.env.WEB_PORT,
+                SECURE_PORT: process.env.SECURE_PORT,
+                SECURE_WEB_PORT: process.env.SECURE_WEB_PORT
             })
         },
         plugins: [
