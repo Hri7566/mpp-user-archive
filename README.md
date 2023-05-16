@@ -15,5 +15,7 @@ The information sent to the server from the clients includes:
 - user colors
 - user tags
 - times in which the user's data was saved
-    
+
+An image of the original idea is below.
+
 ![image](https://user-images.githubusercontent.com/18133844/235045332-f6026685-7632-4c4f-8135-d08a791b52b1.png)
