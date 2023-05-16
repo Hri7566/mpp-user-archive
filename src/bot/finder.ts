@@ -58,7 +58,7 @@ export const startSearch = () => {
 
 const logger = new Logger("Finder");
 
-client.on("hi", (msg: InboundHiMessage) => {
+client.once("hi", (msg: InboundHiMessage) => {
     logger.info("Connected to MPPClone");
 
     startSearch();
