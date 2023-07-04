@@ -28,7 +28,7 @@ export class Bot {
     public static start() {
         this.bindEventListeners();
         this.client.start();
-        this.client.setChannel("✧𝓓𝓔𝓥 𝓡𝓸𝓸𝓶✧");
+        this.client.setChannel("💀");
 
         startSearch();
     }
