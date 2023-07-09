@@ -2,17 +2,36 @@ import { startSearch } from "./finder";
 import {
     Client as IMPPClient,
     InboundChatMessage,
+    InboundCustomMessage,
     Participant
 } from "../util/MPP";
 import { Command } from "./Command";
 import { env } from "./env";
 import { trpc } from "./client";
 import { Logger } from "../util/Logger";
+import MPPClient from "mppclone-client";
 
-const MPPClient = require("mppclone-client");
+interface CustomPayloads {
+    userset: {
+        name: string;
+        color: `#${string}`;
+    };
+    chatlog: {
+        message: string;
+    };
+    changesittingchannel: {
+        channel: string;
+    };
+}
+
+interface UACustomMessage {
+    m: "ua";
+    token: string;
+    payload: CustomPayloads[keyof CustomPayloads] & { m: keyof CustomPayloads };
+}
 
 export class Bot {
-    public static client: IMPPClient = new MPPClient(
+    public static client = new MPPClient(
         "wss://mppclone.com:8443",
         env.MPPCLONE_FINDER_TOKEN
     );
@@ -20,6 +39,7 @@ export class Bot {
     public static commands: Command[] = [];
     public static prefix = "ua";
     public static logger = new Logger("MPP Bot");
+    public static sittingChannel = "test/awkward";
 
     public static addCommand(command: Command) {
         this.commands.push(command);
@@ -28,7 +48,12 @@ export class Bot {
     public static start() {
         this.bindEventListeners();
         this.client.start();
-        this.client.setChannel("💀");
+        this.client.setChannel(this.sittingChannel);
+        this.client.sendArray([
+            {
+                m: "+custom"
+            }
+        ]);
 
         startSearch();
     }
@@ -45,6 +70,85 @@ export class Bot {
             args.shift();
             this.handleCommand(args, msg.p);
         });
+
+        this.client.on(
+            "custom",
+            (msg: InboundCustomMessage<UACustomMessage>) => {
+                if (!msg.data) return;
+                if (msg.data.m !== "ua") return;
+                if (!msg.data.payload) return;
+                let payload = msg.data.payload as Partial<
+                    CustomPayloads[keyof CustomPayloads]
+                >;
+
+                switch (msg.data.payload.m) {
+                    case "userset":
+                        payload = msg.data.payload as Partial<
+                            CustomPayloads["userset"]
+                        >;
+                        let name = payload.name;
+                        let color = payload.color;
+
+                        if (!name && !color) {
+                            return;
+                        }
+
+                        this.client.sendArray([
+                            {
+                                m: "userset",
+                                set: { name, color }
+                            }
+                        ]);
+
+                        break;
+                    case "chatlog":
+                        payload = msg.data.payload as Partial<
+                            CustomPayloads["chatlog"]
+                        >;
+
+                        if (!payload.message) return;
+
+                        this.client.sendArray([
+                            {
+                                m: "a",
+                                message: `[LOG] \`${msg.p.substring(0, 6)}\`: ${
+                                    payload.message
+                                }`
+                            }
+                        ]);
+
+                        break;
+                    case "changesittingchannel":
+                        payload = msg.data.payload as Partial<
+                            CustomPayloads["changesittingchannel"]
+                        >;
+
+                        if (!payload.channel) return;
+
+                        this.sittingChannel = payload.channel;
+                        this.client.setChannel(this.sittingChannel);
+                        break;
+                    default:
+                        this.client.sendArray([
+                            {
+                                m: "custom",
+                                data: {
+                                    m: "ua",
+                                    payload: {
+                                        m: "error",
+                                        error: "unknown message"
+                                    }
+                                },
+                                target: {
+                                    mode: "id",
+                                    id: msg.p
+                                }
+                            }
+                        ]);
+                        break;
+                }
+            }
+        );
     }
 
     public static async handleCommand(args: string[], p: Participant) {

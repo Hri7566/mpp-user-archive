@@ -58,6 +58,20 @@ export declare interface InboundChatMessage {
     t: number;
 }
 
+export declare interface InboundCustomMessage<D extends any> {
+    m: "custom";
+    data: D;
+    p: Participant["_id"];
+}
+
+export declare interface InboundCustomSubscribeMessage {
+    m: "+custom";
+}
+
+export declare interface InboundCustomUnsubscribeMessage {
+    m: "-custom";
+}
+
 export declare interface InboundHiMessage {
     m: "hi";
     t: EpochTimeStamp;
