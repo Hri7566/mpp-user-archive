@@ -10,9 +10,9 @@ import type {
     InboundChannelMessage
 } from "../util/MPP";
 import { env } from "./env";
+import { default as MPPClient } from "mpp-client-net";
 
-const MPPClient = require("mppclone-client");
-export const client: Client = new MPPClient(
+export const client = new MPPClient(
     "wss://mppclone.com:8443",
     env.MPPCLONE_FINDER_TOKEN
 );
@@ -53,7 +53,9 @@ export const startSearch = () => {
         }, time * 1000);
     });
 
-    client.on("ch", sendUsers);
+    client.on("ch", msg => {
+        sendUsers(msg as unknown as InboundChannelMessage);
+    });
 };
 
 const logger = new Logger("Finder");
