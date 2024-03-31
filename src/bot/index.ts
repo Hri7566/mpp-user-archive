@@ -9,7 +9,7 @@ import { Command } from "./Command";
 import { env } from "./env";
 import { trpc } from "./client";
 import { Logger } from "../util/Logger";
-import MPPClient from "mppclone-client";
+import MPPClient from "mpp-client-net";
 
 interface CustomPayloads {
     userset: {

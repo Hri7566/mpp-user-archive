@@ -11,7 +11,10 @@ export class Bot {
             let usedAlias;
 
             aliasLoop: for (const alias of command.aliases) {
-                if (input.toLowerCase().startsWith(alias.toLowerCase())) {
+                if (
+                    input.toLowerCase().startsWith(alias.toLowerCase()) &&
+                    input.length === alias.length
+                ) {
                     usedAlias = alias;
                     break aliasLoop;
                 }
@@ -21,6 +24,8 @@ export class Bot {
 
             try {
                 const out = await command.callback(input);
+                if (out == -1)
+                    return `Incorrect input. Usage: ${command.aliases[0]} ${command.usage}`;
                 return out || "";
             } catch (err) {
                 this.logger.error(err);
@@ -43,7 +48,7 @@ export class Bot {
 
 Bot.addCommand({
     id: "help",
-    aliases: ["help", "h", "commands", "cmds"],
+    aliases: ["help", "h", "commands", "cmds", "hlep"],
     description: "Get info about commands.",
     usage: "[command]",
     callback: input => {
@@ -75,9 +80,7 @@ Bot.addCommand({
         const args = input.split(" ");
         const argcat = input.substring(args[0].length).trim();
 
-        if (!argcat) {
-            return "Please provide an argument.";
-        }
+        if (!argcat) return -1;
 
         const data = await trpc.getIDsFromName.query({
             name: argcat
@@ -105,9 +108,7 @@ Bot.addCommand({
         const args = input.split(" ");
         const argcat = input.substring(args[0].length).trim();
 
-        if (!argcat) {
-            return "Please provide an argument.";
-        }
+        if (!argcat) return -1;
 
         const data = await trpc.getNameHistory.query({
             id: argcat
@@ -127,7 +128,19 @@ Bot.addCommand({
 
 Bot.addCommand({
     id: "totalusers",
-    aliases: ["totalusers", "usertotal"],
+    aliases: [
+        "totalusers",
+        "usertotal",
+        "usercount",
+        "countusers",
+        "count",
+        "total",
+        "totals",
+        "countu",
+        "totalu",
+        "users",
+        "t"
+    ],
     description: "Get the total amount of users in the database.",
     usage: "",
     callback: async (input: string) => {

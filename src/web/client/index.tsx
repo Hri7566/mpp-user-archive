@@ -36,7 +36,7 @@ const App = () => {
             </header>
             <div
                 id="content"
-                className="flex-1 h-full bg-zinc-950 m-4 p-4 rounded-2xl"
+                className="flex-1 h-full bg-[#ffffff05] m-4 p-4 rounded-2xl shadow-md ring-1 ring-inset ring-[#ffffff08]"
             >
                 {/* <div className="container min-w-full"> */}
                 <RouterProvider router={router} />
@@ -64,7 +64,7 @@ root.render(
 );
 
 document.body.classList.add(
-    "bg-black",
+    "bg-stone-950",
     "text-zinc-300",
     "justify-center",
     "min-h-screen"

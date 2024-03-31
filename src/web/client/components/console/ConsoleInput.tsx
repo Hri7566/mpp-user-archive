@@ -14,7 +14,7 @@ export const ConsoleInput = (
         <>
             <input
                 type="text"
-                className="bg-zinc-900 p-2 rounded-md focus:outline-none focus:border-zinc-800 w-full mt-auto mb-0"
+                className="bg-[#ffffff05] ring-1 ring-inset ring-[#ffffff08] p-2 rounded-md focus:outline-none focus:ring-stone-800 w-full mt-auto mb-0 transition-colors duration-300"
                 onChange={evt => {
                     setText(evt.target.value);
                 }}
@@ -24,7 +24,7 @@ export const ConsoleInput = (
                         props.onEnter(text, setText);
                     }
                 }}
-                // placeholder={`Type "help" to view commands.`}
+                placeholder={`Type here`}
             />
         </>
     );
