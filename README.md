@@ -15,4 +15,3 @@ The information sent to the server from the clients includes:
 - user colors
 - user tags
 - a timestamp when corresponding data is archived
-
