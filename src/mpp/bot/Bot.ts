@@ -10,6 +10,17 @@ export interface BotConfig {
 	token: string;
 }
 
+export interface Participant {
+	_id: string;
+	id: string;
+	name: string;
+	color: string;
+	tag: {
+		text: string;
+		color: string;
+	}
+}
+
 export class Bot {
 	public client: Client;
 
@@ -17,6 +28,7 @@ export class Bot {
 		this.client = new Client(config.uri, config.token);
 
 		this.client.setChannel(config.channel);
+		this.bindEventListeners();
 	}
 
 	public start() {
@@ -40,6 +52,18 @@ export class Bot {
 			// TODO handle chat commands
 		});
 
+		this.client.on("ls", msg => {
+			if (!msg.u) return;
+
+			for (const channel of msg.u) {
+				this.sendParticipants(channel.ppl);
+			}
+		});
+
 		// TODO handle custom message commands
+	}
+
+	public sendParticipants(ppl: Participant[]) {
+
 	}
 }
